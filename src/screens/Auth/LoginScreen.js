@@ -8,7 +8,6 @@ import {useDispatch} from 'react-redux';
 import {StyledForm} from '../../components/styled/StyledForm';
 import {StyledInput} from '../../components/styled/StyledInput';
 
-
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const formRef = useRef(null);
@@ -16,9 +15,9 @@ const LoginScreen = ({navigation}) => {
   const handlePushToRegister = () => {
     navigation.navigate('Register');
   };
-    const handlePushToActivate = () => {
-        navigation.navigate('RegisterConfirmation');
-    };
+  const handlePushToActivate = () => {
+    navigation.navigate('RegisterConfirmation');
+  };
 
   return (
     <AuthTemplate
@@ -28,8 +27,7 @@ const LoginScreen = ({navigation}) => {
       secondaryAction={handlePushToRegister}
       primaryAction={() => formRef.current.handleSubmit()}
       tertiaryAction={handlePushToActivate}
-      tertiaryText="lub aktywuj konto!"
-    >
+      tertiaryText="lub aktywuj konto!">
       <Formik
         innerRef={formRef}
         initialValues={{
@@ -53,7 +51,7 @@ const LoginScreen = ({navigation}) => {
               <HelperText type="error">{errors.login}</HelperText>
             )}
             <StyledInput
-                secureTextEntry={true}
+              secureTextEntry={true}
               label="Hasło"
               mode="outlined"
               type="password"
