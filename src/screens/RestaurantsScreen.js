@@ -1,28 +1,12 @@
 import React from 'react';
 import {StyledTitle} from '../components/styled/StyledTitle';
-import {
-  ActivityIndicator,
-  Button,
-  Caption,
-  Card,
-  Paragraph,
-  Searchbar,
-  Title,
-  useTheme,
-} from 'react-native-paper';
+import {Button, Caption, Card, Searchbar, useTheme} from 'react-native-paper';
 import {StyledScrollWrapper} from '../components/styled/StyledScrollWrapper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components';
-import {View} from 'react-native';
+import {StyledFilterWrapper} from "../components/styled/StyledFilterWrapper";
 
-const StyledFilterWrapper = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 20px;
-`;
+
 
 const StyledCard = styled(Card)`
   margin-bottom: 10px;
@@ -53,7 +37,8 @@ const RestaurantScreen = ({navigation}) => {
           navigation.navigate('SingleRestaurant', {
             restaurantName: 'Wiejska',
             restaurantId: 123,
-        })}>
+          })
+        }>
         <Card.Cover source={{uri: ''}} resizeMode="contain" />
         <Card.Title title="Wiejska" subtitle="Fast food, Pizza" />
         <Card.Actions style={{paddingLeft: 16}}>
