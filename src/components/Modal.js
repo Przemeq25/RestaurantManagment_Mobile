@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components';
 
 const modalStyle = {
-  backgroundColor: 'white',
+  backgroundColor: '#F8F8F8',
   margin: 10,
   display: 'flex',
   flex: 1,
@@ -27,18 +27,18 @@ const StyledModalTitleBar = styled.View`
   margin-bottom: 16px;
 `;
 
-const Modal = ({handleToggleFiltersModal, visible, children, title}) => {
+const Modal = ({handleToggle, visible, children, title}) => {
   const {colors} = useTheme();
   return (
     <Portal>
       <PaperModal
         visible={visible}
-        onDismiss={handleToggleFiltersModal}
+        onDismiss={handleToggle}
         contentContainerStyle={modalStyle}>
         <StyledModalScrollWrapper>
           <StyledModalTitleBar>
             <Title theme={{colors: {text: colors.secondary}}}>{title}</Title>
-            <TouchableOpacity onPress={handleToggleFiltersModal}>
+            <TouchableOpacity onPress={handleToggle}>
               <Icon name="close" size={24} color={colors.primary} />
             </TouchableOpacity>
           </StyledModalTitleBar>

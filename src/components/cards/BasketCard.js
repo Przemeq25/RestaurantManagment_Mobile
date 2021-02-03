@@ -10,6 +10,8 @@ import {
 } from 'react-native-paper';
 import StyledCard from '../styled/StyledCard';
 import styled from 'styled-components';
+import {StyledBasketCardTotalPrice} from '../styled/StyledBasketCardTotalPrice';
+import {FlexRow} from '../styled/FlexRow';
 
 const StyledTitle = styled(Title)`
   margin-top: -5px;
@@ -22,25 +24,6 @@ const StyledBasketCardTextInput = styled(TextInput)`
   font-size: 13px;
 `;
 
-const StyledBasketCardTotalPrice = styled.View`
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  right: 10px;
-  border-color: #cfcfcf;
-  width: 70px;
-  height: 100%;
-  border-left-width: 1px;
-  padding-left: 10px;
-  display: flex;
-  justify-content: center;
-`;
-const StyledBasketCardCounter = styled.View`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-`;
-
 const BasketCard = () => {
   const {colors} = useTheme();
   return (
@@ -48,7 +31,7 @@ const BasketCard = () => {
       <View>
         <StyledTitle>Pizza</StyledTitle>
       </View>
-      <StyledBasketCardCounter>
+      <FlexRow>
         <TouchableOpacity>
           <Icon
             name="control-point"
@@ -74,7 +57,7 @@ const BasketCard = () => {
             style={{marginLeft: 5, marginTop: 5}}
           />
         </TouchableOpacity>
-      </StyledBasketCardCounter>
+      </FlexRow>
       <StyledBasketCardTotalPrice>
         <Subheading theme={{colors: {text: colors.secondary}}}>
           30 zł

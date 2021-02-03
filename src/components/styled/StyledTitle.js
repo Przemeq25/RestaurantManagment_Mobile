@@ -3,6 +3,6 @@ import {Title} from 'react-native-paper';
 
 export const StyledTitle = styled(Title)`
   color: ${(props) => (props.color ? props.color : '#000')};
-  text-align: center;
-  margin: 10px;
+  text-align: ${(props) => (props.align ? props.align : 'center')};
+  margin: 10px 0px;
 `;

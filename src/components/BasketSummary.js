@@ -9,6 +9,7 @@ import {
 } from 'react-native-paper';
 import {View} from 'react-native';
 import styled from 'styled-components';
+import {navigate} from '../config/route';
 
 const StyledBasketCardSummaryText = styled(Subheading)`
   font-weight: bold;
@@ -17,7 +18,7 @@ const StyledBasketCardSummaryText = styled(Subheading)`
   font-size: 24px;
 `;
 
-const BasketSummary = () => {
+const BasketSummary = ({handleToggleBasket}) => {
   const {colors} = useTheme();
   return (
     <View>
@@ -36,7 +37,14 @@ const BasketSummary = () => {
           <Caption>+dostawa</Caption>
         </View>
       </View>
-      <Button mode="contained" color={colors.secondary} dark>
+      <Button
+        mode="contained"
+        color={colors.secondary}
+        dark
+        onPress={() => {
+            handleToggleBasket();
+            navigate('Payment');
+        }}>
         Dostawa i płatność
       </Button>
     </View>

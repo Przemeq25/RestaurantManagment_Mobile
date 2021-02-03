@@ -8,7 +8,7 @@ import {StyledFilterWrapper} from "../components/styled/StyledFilterWrapper";
 
 
 
-const StyledCard = styled(Card)`
+const StyledRestaurantCard = styled(Card)`
   margin-bottom: 10px;
   border-radius: 18px;
   overflow: hidden;
@@ -31,7 +31,7 @@ const RestaurantScreen = ({navigation}) => {
         <Button color={colors.secondary}>Sortuj</Button>
       </StyledFilterWrapper>
       {/*<ActivityIndicator animating={true} color={colors.secondary} size={40}/>*/}
-      <StyledCard
+      <StyledRestaurantCard
         elevation={4}
         onPress={() =>
           navigation.navigate('SingleRestaurant', {
@@ -57,7 +57,7 @@ const RestaurantScreen = ({navigation}) => {
           />
           <Caption>434 343 432</Caption>
         </Card.Actions>
-      </StyledCard>
+      </StyledRestaurantCard>
     </StyledScrollWrapper>
   );
 };

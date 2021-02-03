@@ -6,6 +6,7 @@ import {FAB, useTheme} from 'react-native-paper';
 import Modal from './src/components/Modal';
 import BasketCard from './src/components/cards/BasketCard';
 import BasketSummary from './src/components/BasketSummary';
+import RestaurantBasketWrapper from './src/components/styled/StyledBasketWrapper';
 
 const App = () => {
   const {colors} = useTheme();
@@ -32,11 +33,14 @@ const App = () => {
         }}
       />
       <Modal
-        handleToggleFiltersModal={handleToggleBasketVisible}
+        handleToggle={handleToggleBasketVisible}
         visible={isBasketVisible}
         title="Twoj koszyk">
-        <BasketCard />
-        <BasketSummary />
+        <RestaurantBasketWrapper restaurantName="Wiejska">
+          <BasketCard />
+          <BasketCard />
+        </RestaurantBasketWrapper>
+        <BasketSummary handleToggleBasket={handleToggleBasketVisible} />
       </Modal>
     </>
   );

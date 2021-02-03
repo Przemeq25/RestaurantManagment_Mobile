@@ -16,6 +16,7 @@ import {View} from 'react-native';
 import AppLogo from '../components/AppLogo';
 import UserAccountScreen from '../screens/UserAccountScreen';
 import SingleRestaurantScreen from '../screens/SingleRestaurantScreen';
+import DeliveryAndPayment from '../screens/DeliveryAndPayment';
 
 export const navigationRef = React.createRef();
 
@@ -48,7 +49,8 @@ const RestaurantStack = createStackNavigator();
 const RestaurantStackScreen = ({navigation}) => {
   const {colors} = useTheme();
   return (
-    <RestaurantStack.Navigator initialRouteName="Restaurants"
+    <RestaurantStack.Navigator
+      initialRouteName="Restaurants"
       screenOptions={{
         headerStyle: {
           backgroundColor: colors.secondary,
@@ -78,6 +80,13 @@ const RestaurantStackScreen = ({navigation}) => {
           title: route.params.restaurantName,
         })}
       />
+      <RestaurantStack.Screen
+        name="Payment"
+        component={DeliveryAndPayment}
+        options={({route}) => ({
+          title: 'Płatność'
+        })}
+      />
     </RestaurantStack.Navigator>
   );
 };
@@ -90,11 +99,10 @@ export const DrawerUserMenuScreen = () => {
       drawerPosition="right"
       drawerContent={(props) => (
         <DrawerContentScrollView {...props}>
-          <View style={{paddingTop: 30, paddingBottom: 30, paddingLeft: 10}} >
-            <AppLogo/>
+          <View style={{paddingTop: 30, paddingBottom: 30, paddingLeft: 10}}>
+            <AppLogo />
           </View>
-          <DrawerItemList {...props} >
-          </DrawerItemList>
+          <DrawerItemList {...props} />
           <View style={{marginTop: 40, paddingLeft: 10, paddingRight: 10}}>
             <Button color={colors.secondary} mode="contained" dark>
               Wyloguj się
