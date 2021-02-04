@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import {
   Button,
+  Caption,
+  HelperText,
   RadioButton,
   Subheading,
   Text,
   TextInput,
+  Title,
   useTheme,
 } from 'react-native-paper';
 import {StyledTitle} from '../components/styled/StyledTitle';
@@ -16,6 +19,12 @@ import {FlexRow} from '../components/styled/FlexRow';
 import styled from 'styled-components';
 import {StyledDivider} from '../components/styled/StyledDivider';
 import Modal from '../components/Modal';
+import {Formik} from 'formik';
+import {StyledForm} from '../components/styled/StyledForm';
+import {StyledInput} from '../components/styled/StyledInput';
+import {personalDataInitialValues} from '../helpers/_helpers';
+import {navigate} from '../config/route';
+import PersonalDataForm from '../components/PersonalDataForm';
 
 const StyledRadioText = styled(Text)`
   font-size: 12px;
@@ -27,6 +36,13 @@ const StyledPersonalDataWrapper = styled.View`
   padding: 0px 16px 16px;
   background-color: white;
   margin-top: 16px;
+`;
+
+const StyledBasketCardSummaryText = styled(Subheading)`
+  font-weight: bold;
+  margin-bottom: -5px;
+  text-align: right;
+  font-size: 24px;
 `;
 
 const DeliveryAndPayment = () => {
@@ -58,8 +74,9 @@ const DeliveryAndPayment = () => {
         <Modal
           visible={isAddressModalOpen}
           title="Zmień adres"
-          handleToggle={handleToggleModalAddress}
-        />
+          handleToggle={handleToggleModalAddress}>
+          <PersonalDataForm />
+        </Modal>
       </StyledPersonalDataWrapper>
       <View>
         <StyledTitle color={colors.primary}>Produkty i dostawa</StyledTitle>
@@ -93,6 +110,30 @@ const DeliveryAndPayment = () => {
           />
         </RestaurantBasketWrapper>
       </View>
+      <StyledPersonalDataWrapper>
+        <Title>Podsumowanie</Title>
+        <View
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            marginBottom: 20,
+          }}>
+          <View>
+            <Text>Całkowity koszt: </Text>
+            <Caption>w tym dostawa: </Caption>
+          </View>
+
+          <View>
+            <StyledBasketCardSummaryText>30zł</StyledBasketCardSummaryText>
+            <Caption>0.00zł</Caption>
+          </View>
+        </View>
+        <Button mode="contained" color={colors.secondary} dark>
+          Kupuję i płacę
+        </Button>
+      </StyledPersonalDataWrapper>
     </StyledScrollWrapper>
   );
 };
