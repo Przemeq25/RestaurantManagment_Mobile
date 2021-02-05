@@ -5,6 +5,8 @@ import {Subheading, Title, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import StyledCard from '../styled/StyledCard';
 import styled from 'styled-components';
+import {useDispatch} from 'react-redux';
+import {addProduct} from '../../redux/actions/basket';
 
 const StyledAddProductButton = styled.TouchableOpacity`
   position: absolute;
@@ -21,19 +23,44 @@ const StyledTimeToPrepareText = styled.View`
 `;
 
 const StyledTitle = styled(Title)`
-  margin-top: -5px;
-  margin-bottom: -10px;
+  font-size: 18px;
+  line-height: 18px;
 `;
 
-const MenuCard = () => {
+const MenuCard = ({
+  name,
+  id,
+  ingredients,
+  price,
+  timeToDo,
+  restaurantName,
+  restaurantId,
+  image,
+  payment,
+}) => {
   const {colors} = useTheme();
+  const dispatch = useDispatch();
+
+  const mealObject = {
+    name: name,
+    id: id,
+    image: image,
+    unitPrice: price,
+    restaurantName: restaurantName,
+    restaurantId: restaurantId,
+    restaurantPaymentOnline: payment,
+    timeToDo: timeToDo,
+  };
+
   return (
-    <StyledCard>
-      <View>
-        <StyledTitle>Pizza</StyledTitle>
-        <StyledSubtitle>Fast food</StyledSubtitle>
+    <StyledCard uri={image}>
+      <View style={{width: '80%'}}>
+        <StyledTitle>{name}</StyledTitle>
+        <StyledSubtitle>{ingredients}</StyledSubtitle>
       </View>
-      <Subheading theme={{colors: {text: colors.secondary}}}>30 zł</Subheading>
+      <Subheading theme={{colors: {text: colors.secondary}}}>
+        {price} zł
+      </Subheading>
       <StyledTimeToPrepareText>
         <Icon
           name="access-time"
@@ -41,9 +68,9 @@ const MenuCard = () => {
           color={colors.secondary}
           style={{marginRight: 5}}
         />
-        <StyledSubtitle> 30min</StyledSubtitle>
+        <StyledSubtitle> {timeToDo} min</StyledSubtitle>
       </StyledTimeToPrepareText>
-      <StyledAddProductButton>
+      <StyledAddProductButton onPress={() => dispatch(addProduct(mealObject))}>
         <Icon name="add-shopping-cart" size={25} color={colors.secondary} />
       </StyledAddProductButton>
     </StyledCard>

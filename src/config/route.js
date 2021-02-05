@@ -17,6 +17,7 @@ import AppLogo from '../components/AppLogo';
 import UserAccountScreen from '../screens/UserAccountScreen';
 import SingleRestaurantScreen from '../screens/SingleRestaurantScreen';
 import DeliveryAndPayment from '../screens/DeliveryAndPayment';
+import {useSelector} from 'react-redux';
 
 export const navigationRef = React.createRef();
 
@@ -71,6 +72,7 @@ const RestaurantStackScreen = ({navigation}) => {
         component={RestaurantScreen}
         options={{
           headerTitle: 'Restauracje',
+            headerLeft:null,
         }}
       />
       <RestaurantStack.Screen
@@ -160,16 +162,23 @@ export const DrawerUserMenuScreen = () => {
 
 const RootStack = createStackNavigator();
 export const RootStackScreen = () => {
+    const isLoggedIn = useSelector(state=>state.auth.isLoggedIn)
   return (
     <RootStack.Navigator headerMode="none">
-      <RootStack.Screen name="User" component={DrawerUserMenuScreen} />
-      <RootStack.Screen
-        name="Auth"
-        component={AuthStackScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+        { isLoggedIn ? (
+            <RootStack.Screen name="User" component={DrawerUserMenuScreen} />
+        ):(
+            <RootStack.Screen
+                name="Auth"
+                component={AuthStackScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
+        )}
+
+
+
     </RootStack.Navigator>
   );
 };

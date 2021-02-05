@@ -51,10 +51,10 @@ const AuthTemplate = ({
   secondaryText,
   tertiaryText,
   tertiaryAction,
+  error,
+  loading,
 }) => {
   const {colors} = useTheme();
-  const error = useSelector((state) => state.auth.error);
-  const loading = useSelector((state) => state.auth.isLoading);
   return (
     <StyledWrapper color={colors.secondary}>
       <AppLogo />
@@ -73,11 +73,14 @@ const AuthTemplate = ({
         <StyledLinkButton color={colors.secondary} onPress={secondaryAction}>
           {secondaryText}
         </StyledLinkButton>
-        {tertiaryAction &&
-          <StyledLinkButton color={colors.primary} onPress={tertiaryAction} size={10}>
+        {tertiaryAction && (
+          <StyledLinkButton
+            color={colors.primary}
+            onPress={tertiaryAction}
+            size={10}>
             {tertiaryText}
           </StyledLinkButton>
-        }
+        )}
       </StyledFormCard>
     </StyledWrapper>
   );

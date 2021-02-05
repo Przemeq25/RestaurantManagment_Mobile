@@ -14,8 +14,7 @@ import {StyledBasketCardTotalPrice} from '../styled/StyledBasketCardTotalPrice';
 import {FlexRow} from '../styled/FlexRow';
 
 const StyledTitle = styled(Title)`
-  margin-top: -5px;
-  margin-bottom: -10px;
+  line-height:20px;
 `;
 
 const StyledBasketCardTextInput = styled(TextInput)`
@@ -24,15 +23,25 @@ const StyledBasketCardTextInput = styled(TextInput)`
   font-size: 13px;
 `;
 
-const BasketCard = () => {
+const BasketCard = ({
+  name,
+  unitPrice,
+  totalPrice,
+  image,
+  amount,
+    id,
+  handleDeleteProduct,
+  handleIncrementProduct,
+  handleDecrementProduct,
+}) => {
   const {colors} = useTheme();
   return (
-    <StyledCard>
-      <View>
-        <StyledTitle>Pizza</StyledTitle>
+    <StyledCard uri={image}>
+      <View style={{width: '70%'}}>
+        <StyledTitle>{name}</StyledTitle>
       </View>
       <FlexRow>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>handleIncrementProduct(id)}>
           <Icon
             name="control-point"
             size={20}
@@ -40,8 +49,8 @@ const BasketCard = () => {
             style={{marginRight: 5, marginTop: 5}}
           />
         </TouchableOpacity>
-        <StyledBasketCardTextInput mode="outlined" value="1" />
-        <TouchableOpacity>
+        <StyledBasketCardTextInput mode="outlined" value={`${amount}`} disabled/>
+        <TouchableOpacity onPress={()=>handleDecrementProduct(id)}>
           <Icon
             name="remove-circle-outline"
             size={20}
@@ -49,7 +58,7 @@ const BasketCard = () => {
             style={{marginLeft: 5, marginTop: 5}}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>handleDeleteProduct(id)}>
           <Icon
             name="delete"
             size={20}
@@ -60,9 +69,9 @@ const BasketCard = () => {
       </FlexRow>
       <StyledBasketCardTotalPrice>
         <Subheading theme={{colors: {text: colors.secondary}}}>
-          30 zł
+          {totalPrice.toFixed(2)} zł
         </Subheading>
-        <Caption>1szt: 30zł</Caption>
+        <Caption>1szt: {unitPrice.toFixed(2)}zł</Caption>
       </StyledBasketCardTotalPrice>
     </StyledCard>
   );

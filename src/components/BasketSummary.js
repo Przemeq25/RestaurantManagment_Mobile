@@ -18,7 +18,7 @@ const StyledBasketCardSummaryText = styled(Subheading)`
   font-size: 24px;
 `;
 
-const BasketSummary = ({handleToggleBasket}) => {
+const BasketSummary = ({handleToggleBasket, totalPrice}) => {
   const {colors} = useTheme();
   return (
     <View>
@@ -33,7 +33,9 @@ const BasketSummary = ({handleToggleBasket}) => {
         }}>
         <Text>Całkowity koszt: </Text>
         <View>
-          <StyledBasketCardSummaryText>30zł</StyledBasketCardSummaryText>
+          <StyledBasketCardSummaryText>
+            {totalPrice.toFixed(2)} zł
+          </StyledBasketCardSummaryText>
           <Caption>+dostawa</Caption>
         </View>
       </View>
@@ -42,8 +44,8 @@ const BasketSummary = ({handleToggleBasket}) => {
         color={colors.secondary}
         dark
         onPress={() => {
-            handleToggleBasket();
-            navigate('Payment');
+          handleToggleBasket();
+          navigate('Payment');
         }}>
         Dostawa i płatność
       </Button>

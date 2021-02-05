@@ -21,8 +21,10 @@ export const register = (email, login, password) => {
         if (errorMessage.response && errorMessage.response.status === 409) {
           dispatch(error('Taki login lub email jest już zajęty'));
         } else if (
-          errorMessage.response &&
-          errorMessage.response.status === 401
+          errorMessage.response && (
+                errorMessage.response.status === 401 ||
+                errorMessage.response.status === 400
+            )
         ) {
           dispatch(error('Wpisz poprawne dane'));
         } else {

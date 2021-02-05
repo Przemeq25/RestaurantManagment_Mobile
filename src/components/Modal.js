@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const modalStyle = {
   backgroundColor: '#F8F8F8',
-  margin: 10,
+  margin: 5,
   display: 'flex',
   flex: 1,
   borderRadius: 5,
@@ -16,7 +16,7 @@ const modalStyle = {
 const StyledModalScrollWrapper = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
     minHeight: '100%',
-    padding: 20,
+    padding: 10,
   },
 }))``;
 const StyledModalTitleBar = styled.View`

@@ -3,7 +3,7 @@ import AuthTemplate from '../../components/templates/AuthTemplate';
 import {HelperText} from 'react-native-paper';
 import {Formik} from 'formik';
 import {activateValidationSchema} from '../../helpers/_validation';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {activateAccount} from '../../redux/actions/register';
 import {StyledForm} from '../../components/styled/StyledForm';
 import {StyledInput} from '../../components/styled/StyledInput';
@@ -11,6 +11,8 @@ import {StyledInput} from '../../components/styled/StyledInput';
 const RegisterConfirmationScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const formRef = useRef(null);
+  const error = useSelector((state) => state.register.error);
+  const loading = useSelector((state) => state.register.isRequesting);
   const handlePushToRegister = () => {
     navigation.navigate('Register');
   };
@@ -18,6 +20,8 @@ const RegisterConfirmationScreen = ({navigation}) => {
   return (
     <AuthTemplate
       title="Aktywuj konto"
+      error={error}
+      loading={loading}
       primaryText="Aktywuj teraz"
       secondaryText="Nie masz konta? Zarejestruj się"
       secondaryAction={handlePushToRegister}

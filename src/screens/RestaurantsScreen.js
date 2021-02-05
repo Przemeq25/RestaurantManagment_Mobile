@@ -1,21 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyledTitle} from '../components/styled/StyledTitle';
-import {Button, Caption, Card, Searchbar, useTheme} from 'react-native-paper';
+import {
+    ActivityIndicator,
+    Button,
+    Searchbar,
+    Text, useTheme,
+} from 'react-native-paper';
 import {StyledScrollWrapper} from '../components/styled/StyledScrollWrapper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import styled from 'styled-components';
-import {StyledFilterWrapper} from "../components/styled/StyledFilterWrapper";
+import {StyledFilterWrapper} from '../components/styled/StyledFilterWrapper';
+import {restaurantService} from '../services/restaurantService';
+import RestaurantCard from '../components/cards/RestaurantCard';
 
+const RestaurantScreen = () => {
+    const {colors} = useTheme();
+  const [restaurants, setRestaurants] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(false);
+  const [query, setQuery] = useState({
+    page: 0,
+  });
 
+  useEffect(() => {
+    setIsLoading(true);
+    restaurantService
+      .getAllRestaurants(query)
+      .then((res) => {
+        setRestaurants(res.data.content);
+        setTotalPages(res.data.totalPages);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  }, [query]);
 
-const StyledRestaurantCard = styled(Card)`
-  margin-bottom: 10px;
-  border-radius: 18px;
-  overflow: hidden;
-`;
-
-const RestaurantScreen = ({navigation}) => {
-  const {colors} = useTheme();
   return (
     <StyledScrollWrapper>
       <StyledTitle color={colors.secondary}>Dostępne restauracje</StyledTitle>
@@ -30,34 +48,15 @@ const RestaurantScreen = ({navigation}) => {
         </Button>
         <Button color={colors.secondary}>Sortuj</Button>
       </StyledFilterWrapper>
-      {/*<ActivityIndicator animating={true} color={colors.secondary} size={40}/>*/}
-      <StyledRestaurantCard
-        elevation={4}
-        onPress={() =>
-          navigation.navigate('SingleRestaurant', {
-            restaurantName: 'Wiejska',
-            restaurantId: 123,
-          })
-        }>
-        <Card.Cover source={{uri: ''}} resizeMode="contain" />
-        <Card.Title title="Wiejska" subtitle="Fast food, Pizza" />
-        <Card.Actions style={{paddingLeft: 16}}>
-          <Icon
-            name="home"
-            size={20}
-            color={colors.secondary}
-            style={{marginRight: 5}}
-          />
-          <Caption>Tarnów - Mickiewicza 245</Caption>
-          <Icon
-            name="phone"
-            size={20}
-            color={colors.secondary}
-            style={{marginRight: 5, marginLeft: 10}}
-          />
-          <Caption>434 343 432</Caption>
-        </Card.Actions>
-      </StyledRestaurantCard>
+      {isLoading ? (
+        <ActivityIndicator animating color={colors.secondary} size={40} />
+      ) : restaurants.length ? (
+        restaurants.map((restaurant) => (
+          <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+        ))
+      ) : (
+          <Text style={{textAlign:'center'}}>Brak danych</Text>
+      )}
     </StyledScrollWrapper>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledCardWrapper = styled.View`
-  height: 100px;
+  height: 120px;
   background-color: white;
   border-radius: 5px;
   display: flex;
@@ -13,8 +13,8 @@ const StyledCardWrapper = styled.View`
 `;
 
 const StyledImage = styled.Image`
-  height: 100px;
-  width: 100px;
+  height: 120px;
+  width: 120px;
   background-color: gainsboro;
 `;
 

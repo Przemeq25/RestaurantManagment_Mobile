@@ -4,13 +4,15 @@ import {HelperText} from 'react-native-paper';
 import {Formik} from 'formik';
 import {loginValidationSchema} from '../../helpers/_validation';
 import {login} from '../../redux/actions/auth';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {StyledForm} from '../../components/styled/StyledForm';
 import {StyledInput} from '../../components/styled/StyledInput';
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const formRef = useRef(null);
+  const error = useSelector((state) => state.auth.error);
+    const loading = useSelector((state) => state.auth.isLoading);
 
   const handlePushToRegister = () => {
     navigation.navigate('Register');
@@ -22,6 +24,8 @@ const LoginScreen = ({navigation}) => {
   return (
     <AuthTemplate
       title="Zaloguj się"
+      error={error}
+      loading={loading}
       primaryText="Zaloguj się"
       secondaryText="Nie masz konta? Zarejestruj się"
       secondaryAction={handlePushToRegister}
