@@ -3,6 +3,7 @@ import {userService} from '../../services/userService';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {successAlert} from './alert';
+import {navigate} from '../../config/route';
 
 export const login = (username, password) => {
   return (dispatch) => {
@@ -26,11 +27,16 @@ export const login = (username, password) => {
         );
         dispatch(success(response.data));
         dispatch(successAlert('Pomyślnie zalogowano do systemu!'));
+        navigate("User");
       })
       .catch((errorMessage) => {
-        if (errorMessage.response && errorMessage.response.status === 401) {
+        if ( errorMessage.response &&
+            (errorMessage.response.status === 401 ||
+                errorMessage.response.status === 400)
+        ) {
           dispatch(error('Błędne dane logowania'));
         } else {
+
           dispatch(error("Błąd serwera :( Spróbuj ponownie!"));
         }
       });
@@ -52,15 +58,15 @@ export const refreshLogin = (refreshToken, dispatch) =>
     userService
       .refreshLogin(refreshToken)
       .then((response) => {
-        localStorage.setItem('access_token', response.data.access_token);
-        localStorage.setItem('refresh_token', response.data.refresh_token);
-        localStorage.setItem(
+          AsyncStorage.setItem('access_token', response.data.access_token);
+          AsyncStorage.setItem('refresh_token', response.data.refresh_token);
+          AsyncStorage.setItem(
           'expires_in',
           moment()
             .add(response.data.expires_in, 'seconds')
             .format('YYYY-MM-DD HH:mm'),
         );
-        localStorage.setItem(
+          AsyncStorage.setItem(
           'refresh_expires_in',
           moment()
             .add(response.data.expires_in * 2, 'seconds')
@@ -98,28 +104,25 @@ export const refreshLogin = (refreshToken, dispatch) =>
 export const logout = () => {
   return (dispatch) => {
     dispatch({type: authConstants.LOGOUT});
-    dispatch({type: restaurantConstants.RESET});
-    dispatch({type: mealsConstants.RESET});
-    dispatch({type: workersConstants.RESET});
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('expires_in');
-    localStorage.removeItem('refresh_expires_in');
+    AsyncStorage.removeItem('access_token');
+    AsyncStorage.removeItem('refresh_token');
+    AsyncStorage.removeItem('expires_in');
+    AsyncStorage.removeItem('refresh_expires_in');
   };
 };
 export const checkIsLoggedIn = (dispatch) =>
   new Promise((resolve, reject) => {
-    const accessToken = localStorage.getItem('access_token');
-    const refreshToken = localStorage.getItem('refresh_token');
-    const expires = localStorage.getItem('expires_in');
-    const refresh_expires = localStorage.getItem('refresh_expires_in');
+    const accessToken = AsyncStorage.getItem('access_token');
+    const refreshToken = AsyncStorage.getItem('refresh_token');
+    const expires = AsyncStorage.getItem('expires_in');
+    const refresh_expires = AsyncStorage.getItem('refresh_expires_in');
 
     if (accessToken && refreshToken && expires && refresh_expires) {
       if (moment(expires).isAfter(moment())) {
         dispatch(
           isLoggedIn({
-            access_token: localStorage.getItem('access_token'),
-            refresh_token: localStorage.getItem('refresh_token'),
+            access_token: AsyncStorage.getItem('access_token'),
+            refresh_token: AsyncStorage.getItem('refresh_token'),
           }),
         );
         resolve();

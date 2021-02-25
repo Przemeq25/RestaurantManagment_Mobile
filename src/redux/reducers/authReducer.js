@@ -1,7 +1,7 @@
 import {authConstants} from '../types';
 
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: true,
   token: null,
   refreshToken: null,
   isLoading: false,

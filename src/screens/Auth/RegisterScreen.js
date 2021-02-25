@@ -3,7 +3,7 @@ import AuthTemplate from '../../components/templates/AuthTemplate';
 import {HelperText} from 'react-native-paper';
 import {Formik} from 'formik';
 import {registerValidationSchema} from '../../helpers/_validation';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {register} from '../../redux/actions/register';
 import {StyledForm} from '../../components/styled/StyledForm';
 import {StyledInput} from '../../components/styled/StyledInput';
@@ -11,6 +11,8 @@ import {StyledInput} from '../../components/styled/StyledInput';
 const RegisterScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const formRef = useRef(null);
+  const error = useSelector((state) => state.register.error);
+  const loading = useSelector((state) => state.register.isRequesting);
 
   const handlePushToLogin = () => {
     navigation.navigate('Login');
@@ -19,6 +21,8 @@ const RegisterScreen = ({navigation}) => {
   return (
     <AuthTemplate
       title="Zarejestruj się"
+      loading={loading}
+      error={error}
       primaryText="Zarejestruj się"
       secondaryText="Masz już konto? Zaloguj się"
       secondaryAction={handlePushToLogin}
@@ -33,7 +37,7 @@ const RegisterScreen = ({navigation}) => {
         }}
         validationSchema={registerValidationSchema}
         onSubmit={(values) => {
-          dispatch(register(values.login, values.email, values.password));
+          dispatch(register(values.email, values.login, values.password));
         }}>
         {({errors, values, handleChange}) => (
           <StyledForm>

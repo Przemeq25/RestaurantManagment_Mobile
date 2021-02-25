@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {appUrl} from '../config/app.config';
+import base64 from 'react-native-base64';
 
 const login = (login, password) => {
   return axios.post(
@@ -11,9 +12,8 @@ const login = (login, password) => {
         username: login,
         password: password,
       },
-      auth: {
-        username: 'app',
-        password: '1234',
+      headers: {
+        "Authorization": "Basic " + base64.encode('app:1234')
       },
     },
   );
@@ -27,9 +27,8 @@ const refreshLogin = (refreshToken) => {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
       },
-      auth: {
-        username: 'app',
-        password: '1234',
+      headers: {
+        "Authorization": "Basic " + base64.encode('app:1234')
       },
     },
   );
@@ -75,7 +74,7 @@ const getPersonalData = (token) => {
     },
   });
 };
-const changePersonalData = (userData,token) => {
+const changePersonalData = (userData, token) => {
   return axios.put(`${appUrl}/user-api/me`, userData, {
     headers: {
       Authorization: `bearer ${token}`,
